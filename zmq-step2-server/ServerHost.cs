@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ZeroMQ;
 
-namespace zmq_step2_server
+namespace zmq_step2.server
 {
     internal enum ServerHostState
     {
@@ -23,7 +23,6 @@ namespace zmq_step2_server
         private ZSocket _serverToWorkersSocket = null;
         private ZSocket _serverFrontendPublishSocket = null;
         private ZSocket _serverFrontendReceiveSocket = null;
-        private ZSocket _workersToServerSocket = null;
 
         public ServerHost(int workerCount)
         {
@@ -65,25 +64,6 @@ namespace zmq_step2_server
             // bind both sockets
             _serverFrontendReceiveSocket.Bind("tcp://*:5555");
             _serverFrontendPublishSocket.Bind("tcp://*:5556");
-
-            //while (true)
-            //{
-            //    using (var receivedMessage = _serverFrontendReceiveSocket.ReceiveMessage())
-            //    {
-            //        var identity = receivedMessage[0].ReadString();
-            //        var message = receivedMessage[1].ReadString();
-
-            //        Console.WriteLine($"{identity}: {message}");
-
-            //        using (var sendMessage = new ZMessage())
-            //        {
-            //            sendMessage.Add(new ZFrame(identity));
-            //            sendMessage.Add(new ZFrame(message));
-
-            //            _serverFrontendPublishSocket.Send(sendMessage);
-            //        }
-            //    }
-            //}
 
             ZContext.Proxy(_serverFrontendReceiveSocket, _serverFrontendPublishSocket);
         }

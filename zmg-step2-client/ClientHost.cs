@@ -2,7 +2,7 @@
 using System.Threading;
 using ZeroMQ;
 
-namespace zmq_step2_client
+namespace zmq_step2.client
 {
     internal class ClientHost
     {

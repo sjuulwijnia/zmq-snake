@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Google.Protobuf.WellKnownTypes;
+using System;
 using ZeroMQ;
 
-namespace zmq_step2_client
+namespace zmq_step2.client
 {
     internal class ClientSend
     {
@@ -28,11 +29,15 @@ namespace zmq_step2_client
                     Console.Write("Send: ");
 
                     var text = Console.ReadLine();
-
-                    using (var sendMessage = new ZMessage())
+                    var message = new Message
                     {
-                        sendMessage.Add(new ZFrame(text));
+                        Name = _clientName,
+                        Text = text,
+                        Timestamp = Timestamp.FromDateTime(DateTime.UtcNow)
+                    };
 
+                    using (var sendMessage = message.ToZMessage())
+                    {
                         if (!sendClient.Send(sendMessage, out ZError error))
                         {
                             if (error == ZError.ETERM)

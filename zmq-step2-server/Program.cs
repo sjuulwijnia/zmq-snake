@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ZeroMQ;
 
-namespace zmq_step2_server
+namespace zmq_step2.server
 {
     class Program
     {
