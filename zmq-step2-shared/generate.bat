@@ -1,0 +1,1 @@
+call protoc -I=protobuf --csharp_out=generated protobuf/message.proto

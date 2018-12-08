@@ -1,7 +1,7 @@
 ﻿using System;
 using ZeroMQ;
 
-namespace zmq_step2_client
+namespace zmq_step2.client
 {
     internal class ClientReceive
     {
@@ -21,9 +21,10 @@ namespace zmq_step2_client
 
                 while (true)
                 {
-                    using (var message = subscriptionClient.ReceiveMessage())
+                    using (var receiveMessage = subscriptionClient.ReceiveMessage())
                     {
-                        Console.WriteLine(message[0].ReadString() + ": " + message[1].ReadString());
+                        var message = receiveMessage.ToMessage(1);
+                        Console.WriteLine($"{message.Name} ({message.Timestamp.ToDateTime()}): {message.Text}");
                     }
                 }
             }
