@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ZeroMQ;
 
+using Protobuf;
+
+using Google.Protobuf;
+using Google.Protobuf.Reflection;
+using Google.Protobuf.WellKnownTypes;
+
 namespace zmq_step1_client
 {
     class Program
@@ -16,6 +22,7 @@ namespace zmq_step1_client
 
         public static void HWClient(string[] args)
         {
+
             //
             // Hello World client
             //
@@ -39,24 +46,40 @@ namespace zmq_step1_client
             using (var context = new ZContext())
             using (var requester = new ZSocket(context, ZSocketType.REQ))
             {
+
+                Console.WriteLine("What is your name?");
+                string name = Console.ReadLine();
+
                 // Connect
                 requester.Connect(endpoint);
 
                 for (int n = 0; n < 1000000; ++n)
                 {
-                    string requestText = $"Hello {n}";
-                    //Console.Write($"Sending {requestText}…");
+                    Console.Write(name + ": ");
+                    string data = Console.ReadLine();
 
-                    // Send
-                    requester.Send(new ZFrame(requestText));
+                    Message question = new Message()
+                    {
+                        Data = data,
+                        Name = name,
+                        Send = Timestamp.FromDateTime(DateTime.UtcNow)
+                    };
+
+                    byte[] message = question.ToByteArray();
+                    requester.Send(new ZFrame(message));
 
                     // Receive
                     using (ZFrame reply = requester.ReceiveFrame())
                     {
-                        //Console.WriteLine($" Received: {requestText} {reply.ReadString()}!");
+                        Message answer = Message.Parser.ParseFrom(reply);
+                        Console.WriteLine(MessageToString(answer));
                     }
                 }
             }
         }
+
+        private static String MessageToString(Message message)
+        { return message.Name + " (" + message.Send.ToDateTime().ToShortTimeString() + ")" + ": " + message.Data; }
+
     }
 }

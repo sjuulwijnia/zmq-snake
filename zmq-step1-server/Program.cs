@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using ZeroMQ;
 
-namespace zmq_step1_server
+using Protobuf;
+
+using Google.Protobuf;
+using Google.Protobuf.Reflection;
+using Google.Protobuf.WellKnownTypes;
+
+namespace zmq_step1_client
 {
     class Program
     {
@@ -17,24 +22,6 @@ namespace zmq_step1_server
 
         public static void HWServer(string[] args)
         {
-            //
-            // Hello World server
-            //
-            // Author: metadings
-            //
-
-            if (args == null || args.Length < 1)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Usage: ./{0} HWServer [Name]", AppDomain.CurrentDomain.FriendlyName);
-                Console.WriteLine();
-                Console.WriteLine("    Name   Your name. Default: World");
-                Console.WriteLine();
-                args = new string[] { "World" };
-            }
-
-            string name = args[0];
-
             // Create
             using (var context = new ZContext())
             using (var responder = new ZSocket(context, ZSocketType.REP))
@@ -42,21 +29,40 @@ namespace zmq_step1_server
                 // Bind
                 responder.Bind("tcp://*:5555");
 
+                Console.WriteLine("What is your name?");
+                string name = Console.ReadLine();
+
                 while (true)
                 {
                     // Receive
                     using (ZFrame request = responder.ReceiveFrame())
                     {
-                        Console.WriteLine("Received {0}", request.ReadString());
+                        Console.WriteLine("Bob, you here?");
+                        // receive a message.
+                        Message answer = Message.Parser.ParseFrom(request);
+                        Console.WriteLine(MessageToString(answer));
 
-                        // Do some work
-                        Thread.Sleep(1);
+                        // send a message
+                        Console.Write(name + ": ");
+                        string data = Console.ReadLine();
 
-                        // Send
-                        responder.Send(new ZFrame(name));
+                        Message question = new Message()
+                        {
+                            Data = data,
+                            Name = name,
+                            Send = Timestamp.FromDateTime(DateTime.UtcNow)
+                        };
+
+                        byte[] message = question.ToByteArray();
+                        responder.Send(new ZFrame(message));
                     }
                 }
             }
+
         }
+
+        private static String MessageToString(Message message)
+        { return message.Name + " (" + message.Send.ToDateTime().ToShortTimeString() + ")" + ": " + message.Data; }
+
     }
 }

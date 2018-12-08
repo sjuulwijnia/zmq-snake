@@ -1,0 +1,15 @@
+﻿
+syntax = "proto3";
+package zeromq;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Protobuf";
+
+message Message {
+
+    string name = 1;
+    string data = 2;
+    google.protobuf.Timestamp send = 3;
+
+}
