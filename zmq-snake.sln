@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zmq-step1-client", "zmq-step1-client\zmq-step1-client.csproj", "{01D49C1F-4438-43BE-96FE-63CA457D9341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zmq-step1-server", "zmq-step1-server\zmq-step1-server.csproj", "{0FC2862C-26F0-43A4-9308-16568E915CE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "step1", "step1", "{EC2E48FA-E724-4BF6-A541-8E26EAAB1113}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "step2", "step2", "{66F0D9B0-1AD1-447A-8295-48041F0B029F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zmq-step2-server", "zmq-step2-server\zmq-step2-server.csproj", "{112CEC0C-742F-49ED-8044-34E67E41DD68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zmq-step2-client", "zmg-step2-client\zmq-step2-client.csproj", "{718AD9F0-82AD-4AE2-8338-8841BBED1605}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "info", "info", "{0F5A0EE0-65F4-4D06-8865-3EFDA19B2CD0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01D49C1F-4438-43BE-96FE-63CA457D9341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01D49C1F-4438-43BE-96FE-63CA457D9341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01D49C1F-4438-43BE-96FE-63CA457D9341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01D49C1F-4438-43BE-96FE-63CA457D9341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC2862C-26F0-43A4-9308-16568E915CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC2862C-26F0-43A4-9308-16568E915CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC2862C-26F0-43A4-9308-16568E915CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC2862C-26F0-43A4-9308-16568E915CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{112CEC0C-742F-49ED-8044-34E67E41DD68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{112CEC0C-742F-49ED-8044-34E67E41DD68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{112CEC0C-742F-49ED-8044-34E67E41DD68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{112CEC0C-742F-49ED-8044-34E67E41DD68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718AD9F0-82AD-4AE2-8338-8841BBED1605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718AD9F0-82AD-4AE2-8338-8841BBED1605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718AD9F0-82AD-4AE2-8338-8841BBED1605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718AD9F0-82AD-4AE2-8338-8841BBED1605}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01D49C1F-4438-43BE-96FE-63CA457D9341} = {EC2E48FA-E724-4BF6-A541-8E26EAAB1113}
+		{0FC2862C-26F0-43A4-9308-16568E915CE4} = {EC2E48FA-E724-4BF6-A541-8E26EAAB1113}
+		{112CEC0C-742F-49ED-8044-34E67E41DD68} = {66F0D9B0-1AD1-447A-8295-48041F0B029F}
+		{718AD9F0-82AD-4AE2-8338-8841BBED1605} = {66F0D9B0-1AD1-447A-8295-48041F0B029F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B8034DF-2CD2-4B03-96E2-C6F2C71D8CE4}
+	EndGlobalSection
+EndGlobal
