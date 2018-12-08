@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>zmg_step2.client</RootNamespace>
     <AssemblyName>zmg-step2-client</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>

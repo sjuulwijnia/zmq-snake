@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="extensions\ProtobufMessageExtensions.cs" />
     <Compile Include="generated\Message.cs" />
+    <Compile Include="Jonsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

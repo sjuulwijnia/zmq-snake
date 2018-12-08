@@ -11,54 +11,67 @@ using Google.Protobuf;
 using Google.Protobuf.Reflection;
 using Google.Protobuf.WellKnownTypes;
 
+using zmq_step2;
+
 namespace zmq_step1_client
 {
     class Program
     {
         static void Main(string[] args)
         {
-            HWServer(args);
+            Jonsole.Setup();
+
+            string address = "tcp://*:5555";
+            Jonsole.ConnectedTo = address;
+
+            // retrieve the name, if no name is given fall back to a default.
+            Jonsole.WriteInteractive("Your name: ");
+            string name = Jonsole.Read();
+
+            if (String.IsNullOrEmpty(name) || name == "default")
+                name = "Server";
+            Jonsole.User = name;
+
+            HWClient(address, name);
         }
 
-        public static void HWServer(string[] args)
+        public static void HWClient(string address, string name)
         {
             // Create
             using (var context = new ZContext())
-            using (var responder = new ZSocket(context, ZSocketType.REP))
+            using (var requester = new ZSocket(context, ZSocketType.REP))
             {
-                // Bind
-                responder.Bind("tcp://*:5555");
+                // Connect
+                requester.Bind(address);
 
-                Console.WriteLine("What is your name?");
-                string name = Console.ReadLine();
-
-                while (true)
+                while(true)
                 {
-                    // Receive
-                    using (ZFrame request = responder.ReceiveFrame())
+                    // receive a message.
+                    using (ZFrame reply = requester.ReceiveFrame())
                     {
-                        Console.WriteLine("Bob, you here?");
-                        // receive a message.
-                        Message answer = Message.Parser.ParseFrom(request);
-                        Console.WriteLine(MessageToString(answer));
-
-                        // send a message
-                        Console.Write(name + ": ");
-                        string data = Console.ReadLine();
-
-                        Message question = new Message()
-                        {
-                            Data = data,
-                            Name = name,
-                            Send = Timestamp.FromDateTime(DateTime.UtcNow)
-                        };
-
-                        byte[] message = question.ToByteArray();
-                        responder.Send(new ZFrame(message));
+                        Message answer = Message.Parser.ParseFrom(reply);
+                        Jonsole.WriteCommon(MessageToString(answer));
                     }
+
+                    // write a message.
+                    string message = Jonsole.Read();
+
+                    // construct the query.
+                    Message question = new Message()
+                    {
+                        Data = message,
+                        Name = name,
+                        Send = Timestamp.FromDateTime(DateTime.UtcNow)
+                    };
+
+                    // put the message in the backbuffer.
+                    Jonsole.WriteCommon(MessageToString(question));
+
+                    // send out the message.
+                    byte[] byteMessage = question.ToByteArray();
+                    requester.Send(new ZFrame(byteMessage));
                 }
             }
-
         }
 
         private static String MessageToString(Message message)
